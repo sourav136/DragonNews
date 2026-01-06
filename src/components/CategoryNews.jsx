@@ -10,12 +10,21 @@ const CategoryNews = () => {
   const { id } = useParams();
   if (!allNews) return <p><span className="loading loading-spinner text-neutral"></span></p>;
 
-  const news =
-    id == 0
-      ? allNews
-      : id == 1
-      ? allNews.filter((item) => item.others.is_today_pick)
-      : allNews.filter((item) => item.category_id === Number(id));
+let news = allNews;
+
+if (id === undefined) {
+  // Home page → show all news
+  news = allNews;
+} else if (Number(id) === 1) {
+  // Today's pick
+  news = allNews.filter((item) => item.others.is_today_pick);
+} else if (Number(id) !== 0) {
+  // Category-wise
+  news = allNews.filter(
+    (item) => item.category_id === Number(id)
+  );
+}
+
   return (
     <div className="w-full">
       <h2 className="text-xl font-semibold text-accent-foreground mb-5">Dragon News Home</h2>
