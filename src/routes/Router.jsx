@@ -1,8 +1,11 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import About from "../components/About";
 import Career from "../components/Career";
 import HomeLayout from "../layouts/HomeLayout";
 import CategoryNews from "../components/categoryNews";
+import AuthLayout from "../layouts/AuthLayout";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
 export const router = createBrowserRouter([
     {
@@ -21,7 +24,7 @@ export const router = createBrowserRouter([
                 Component: CategoryNews,
             },
             {
-                path: "/category/:id",
+                path: "category/:id",
                 Component: CategoryNews,                
             },
         ]        
@@ -33,6 +36,24 @@ export const router = createBrowserRouter([
     {
         path: "/career",
         Component: Career,
+    },
+    {
+        path: "/auth",
+        Component: AuthLayout,
+        children: [
+            {
+                index: true,
+                element: <Navigate to="login" replace />,
+            },
+            {
+                path: "login",
+                Component: Login,
+            },
+            {
+                path: "register",
+                Component: Register,
+            }
+        ]
     },
     {
         path: "*",
