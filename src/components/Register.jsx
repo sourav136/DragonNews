@@ -1,15 +1,26 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
 
 const Register = () => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     const name = form.name.value;
-    console.log({ email, password, name });
+
+    try {
+      await register(name, email, password);
+      alert("Please verify your email before logging in.");
+      form.reset();
+      navigate("/auth/login");
+    } catch (error) {
+      console.log("Registration Error: ", error);
+    }
   };
   return (
     <div className="w-full max-w-md shrink-0 shadow-2xl p-15">
@@ -37,6 +48,8 @@ const Register = () => {
           type="password"
           className="input"
           placeholder="Password"
+          pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}"
+          title="Password must be at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number."
           required
         />
         <button type="submit" className="btn btn-neutral mt-4">
@@ -44,12 +57,12 @@ const Register = () => {
         </button>
         <div className="mt-5">
           <p>
-            Already have an account? 
+            Already have an account?
             <Link
               to="/auth/login"
               className="link link-hover text-blue-500 font-semibold px-2"
             >
-               Login
+              Login
             </Link>
           </p>
         </div>

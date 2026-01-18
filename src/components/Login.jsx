@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
+  const {user} = useAuth();
+  console.log("registered user:", user);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
