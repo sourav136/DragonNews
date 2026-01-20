@@ -27,7 +27,7 @@ const Login = () => {
       form.reset();
       navigate(from, { replace: true });
     } catch (error) {
-      setError("Login failed. Please check your credentials and try again.");
+      setError(error.message);
     } finally {
       setOnProcess(false);
     }
@@ -56,7 +56,7 @@ const Login = () => {
           <a className="link link-hover">Forgot password?</a>
         </div>
         {error && <p className="text-red-500 mt-2">{error}</p>}
-        <button type="submit" className="btn btn-neutral mt-4">
+        <button type="submit" className="btn btn-neutral mt-4" disabled={onProcess}>
           {onProcess ? "Logging in..." : "Login"}
         </button>
         <div className="mt-5">

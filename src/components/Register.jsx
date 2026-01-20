@@ -58,7 +58,7 @@ const Register = () => {
           required
         />
         {error && <p className="text-red-500 mt-2">{error}</p>}
-        <button type="submit" className="btn btn-neutral mt-4">
+        <button type="submit" className="btn btn-neutral mt-4" disabled={onProcess}>
           {onProcess ? "Registering..." : "Register"}
         </button>
         <div className="mt-5">
