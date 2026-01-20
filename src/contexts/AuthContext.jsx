@@ -30,7 +30,9 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (email, password) => {
-        return await signInWithEmailAndPassword(auth, email, password);
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        await result.user.reload();
+        return result.user;
     }
 
     const logOut = async () => await signOut(auth);

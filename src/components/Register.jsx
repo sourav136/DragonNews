@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
 const Register = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [onProcess, setOnProcess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setOnProcess(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
@@ -19,7 +22,9 @@ const Register = () => {
       form.reset();
       navigate("/auth/login");
     } catch (error) {
-      console.log("Registration Error: ", error);
+      setError(error.message);
+    } finally{
+      setOnProcess(false);
     }
   };
   return (
@@ -52,8 +57,9 @@ const Register = () => {
           title="Password must be at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number."
           required
         />
+        {error && <p className="text-red-500 mt-2">{error}</p>}
         <button type="submit" className="btn btn-neutral mt-4">
-          Register
+          {onProcess ? "Registering..." : "Register"}
         </button>
         <div className="mt-5">
           <p>

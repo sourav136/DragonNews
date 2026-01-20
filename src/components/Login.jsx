@@ -1,16 +1,36 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
-  const {user} = useAuth();
-  console.log("registered user:", user);
-  const handleSubmit = (e) => {
+  const {login} = useAuth();
+  const [error, setError] = useState(null);
+  const [onProcess, setOnProcess] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setOnProcess(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log({ email, password });
+    try {
+      const user = await login(email, password);
+      if (!user.emailVerified) {
+        setError("Please verify your email before logging in.");
+        return;
+      }
+      form.reset();
+      navigate(from, { replace: true });
+    } catch (error) {
+      setError("Login failed. Please check your credentials and try again.");
+    } finally {
+      setOnProcess(false);
+    }
   };
   return (
     <div className="w-full max-w-md shrink-0 shadow-2xl p-15">
@@ -35,8 +55,9 @@ const Login = () => {
         <div>
           <a className="link link-hover">Forgot password?</a>
         </div>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
         <button type="submit" className="btn btn-neutral mt-4">
-          Login
+          {onProcess ? "Logging in..." : "Login"}
         </button>
         <div className="mt-5">
           <p>Don't have an account? <Link to="/auth/register" className="link link-hover text-blue-500 font-semibold px-2">Register</Link></p>
