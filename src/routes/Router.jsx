@@ -7,6 +7,7 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import CategoryNews from "../components/CategoryNews";
 import NewsPage from "./../components/NewsPage";
+import ProtectedRoutes from "../components/ProtectedRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -58,7 +59,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/news/:id",
-    element: <NewsPage />,
+    element: (
+      <ProtectedRoutes>
+        <NewsPage />
+      </ProtectedRoutes>
+    ),
     loader: async () => {
       const res = await fetch("/news.json");
       if (!res.ok) {
