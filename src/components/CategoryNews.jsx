@@ -1,6 +1,6 @@
 import React from "react";
 import { CiBookmark, CiShare2 } from "react-icons/ci";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import ReadMore from "./ui/ReadMore";
 import { FaEye, FaRegStar, FaStar } from "react-icons/fa";
@@ -39,7 +39,7 @@ if (id === undefined) {
             }
           );
           return (
-            <div
+            <Link to={`/news/${item.id}`} 
               key={index}
               className="rounded-sm overflow-hidden border border-base-200 mb-7.5"
             >
@@ -117,7 +117,7 @@ if (id === undefined) {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
     </div>
