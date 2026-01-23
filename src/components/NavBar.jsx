@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink } from "react-router-dom";
 import userIcon from "../assets/user.png";
 import { useAuth } from "../contexts/AuthContext";
 

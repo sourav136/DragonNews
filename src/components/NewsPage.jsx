@@ -1,8 +1,8 @@
 import React, { use, useEffect, useState } from "react";
 import Header from "./Header";
 import RightAside from "./RightAside";
-import { Link, useLoaderData, useNavigate, useParams } from "react-router";
-import { useNavigation } from "react-router";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 
 const NewsPage = () => {
     const data = useLoaderData();

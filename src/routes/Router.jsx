@@ -1,13 +1,13 @@
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import About from "../components/About";
 import Career from "../components/Career";
 import HomeLayout from "../layouts/HomeLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import CategoryNews from "../components/CategoryNews";
 import NewsPage from "./../components/NewsPage";
 import ProtectedRoutes from "../components/ProtectedRoutes";
+import CategoryNews from "../components/categoryNews";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +20,7 @@ export const router = createBrowserRouter([
       }
       return res.json();
     },
+    hydrateFallbackElement: <p className="text-center"><span className="loading loading-bars loading-xl"></span></p>,
     children: [
       {
         index: true,
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
       }
       return res.json();
     },
+    hydrateFallbackElement: <p className="text-center"><span className="loading loading-bars loading-xl"></span></p>,
   },
   {
     path: "*",
